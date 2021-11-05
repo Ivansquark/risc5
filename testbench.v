@@ -11,7 +11,7 @@ end
 
 wire clk1; /* For output of tested module */
 
-rv_alu rv_alu(.clkin(clk), .clkout(clk1)); /* Tested module instance */
+//rv_alu rv_alu(.clkin(clk), .clkout(clk1)); /* Tested module instance */
 
 initial begin
     $dumpvars;      /* Open for dump of signals */
