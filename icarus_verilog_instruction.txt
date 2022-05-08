@@ -1,3 +1,3 @@
->iverilog -o test.out testbench.v rv_alu.v
-> vvp test.out
+> iverilog -o test.out testbench.v rv_alu.v
+> vvp test.out    or ./test.out
 > gtkvawe dump.vcd

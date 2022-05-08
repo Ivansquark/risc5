@@ -1,0 +1,69 @@
+$date
+	Sun May  8 20:57:43 2022
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	100ps
+$end
+$scope module test_rv_alu $end
+$var reg 1 ! clk $end
+$var reg 32 " in1 [31:0] $end
+$var reg 32 # in2 [31:0] $end
+$var reg 4 $ opcode [3:0] $end
+$scope module rv_alu $end
+$var wire 4 % op_in [3:0] $end
+$var wire 32 & rd [31:0] $end
+$var wire 32 ' rs1 [31:0] $end
+$var wire 32 ( rs2 [31:0] $end
+$var wire 32 ) sub_res [31:0] $end
+$var wire 1 * comp_res $end
+$var reg 32 + result_r [31:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx +
+x*
+bx )
+bx (
+bx '
+bx &
+bx %
+bx $
+bx #
+bx "
+1!
+$end
+#10
+1*
+b1 &
+b1 +
+0!
+b1 )
+b1 #
+b1 (
+b10 "
+b10 '
+b1 $
+b1 %
+#20
+1!
+#30
+0!
+#40
+1!
+#50
+0!
+#60
+1!
+#70
+0!
+#80
+1!
+#90
+0!
+#100
+1!
