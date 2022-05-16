@@ -31,7 +31,7 @@ module rv_alu(
     always @ (*) begin
         case (op_in)
             ////////////    arithmetic  ////////////////////
-            `ALU_ADD:    result_r <= rs1 + rs2;
+            `ALU_ADD:    result_r <= rs1 + rs2;  // non blocked (result in register)
             `ALU_SUB:    result_r <= sub_res; //rs1 - rs2;
             ////////////    logical     ////////////////////
             `ALU_XOR:    result_r <= rs1 ^ rs2;
