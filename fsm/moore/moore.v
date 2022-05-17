@@ -7,9 +7,9 @@ module moore (
 );
 
 reg [1:0] pres_state, next_state;
-parameter s0 = 2'd0, s1 = 2'd1, s2 = 2'd2, s3 = 2'd3;   //sequential coding
-//parameter s0 = 4'b0001, s1 = 4'b0010, s2 = 4'b0100, s3 = 4'b1000; // one-hot coding
-//parameter s0 = 2'b00, s1 = 2'b01, s2 = 2'b11, s3 = 2'b10; // grey coding
+parameter s0 = 2'd0, s1 = 2'd1, s2 = 2'd2, s3 = 2'd3;   //sequential coding (states < 5)
+//parameter s0 = 4'b0001, s1 = 4'b0010, s2 = 4'b0100, s3 = 4'b1000; // one-hot coding (states < 50)
+//parameter s0 = 2'b00, s1 = 2'b01, s2 = 2'b11, s3 = 2'b10; // grey coding (states >= 50)
 //
 // FSM input combination logic (Next logic state)
 always @(pres_state or in)
@@ -31,7 +31,7 @@ begin: fsm
                 2'b0: next_state = s3;
                 2'b1: next_state = s0;                    
             endcase
-        default: next_state = s0;   // for all untelled states    
+        default: next_state = s0;   // for all undescribed states    
         endcase
 end //fsm
 
