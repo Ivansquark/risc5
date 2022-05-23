@@ -11,8 +11,9 @@
 `define ALU_OR       4'b0011     //  rd = rs1 | rs2;        or
 `define ALU_AND      4'b0100     //  rd = rs1 & rs2;        and
 `define ALU_SLL      4'b0101     //  rd = rs1 <<< rs2;      shift left logical
-`define ALU_SRL      4'b0111     //  rd = rs1 >>> rs2;      shift right logical     (1011 >> 1 == 0101)
-`define ALU_SRA      4'b1000     //  rd = rs1 >> rs2;       shift right ariphmetic  (1011 >> 1 == 1101)
+`define ALU_SRL      4'b0110     //  rd = rs1 >>> rs2;      shift right logical     (1011 >> 1 == 0101)
+`define ALU_SRA      4'b0111     //  rd = rs1 >> rs2;       shift right ariphmetic  (1011 >> 1 == 1101)
+
 `define ALU_SLT      4'b1001     //  rd = rs1 < rs2;        set rd=1 if less than           (0xFF<0 true) 
 `define ALU_SLTU     4'b1010     //  rd = rs1 < rs2;        set rd=1 if less than unsigned  (0xFF<0 false)
 // import rv_defs.v
@@ -22,7 +23,7 @@ module rv_alu(
     input   [31:0]rs1,
     input   [31:0]rs2,
 	output  [31:0]rd,
-    output  comp_res
+    output  comp_res    // zero
 );
     reg [31:0]result_r;
     
