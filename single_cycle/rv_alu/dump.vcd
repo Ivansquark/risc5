@@ -1,5 +1,5 @@
 $date
-	Sun May  8 20:57:43 2022
+	Thu May 26 16:30:00 2022
 $end
 $version
 	Icarus Verilog
@@ -17,8 +17,8 @@ $var wire 4 % op_in [3:0] $end
 $var wire 32 & rd [31:0] $end
 $var wire 32 ' rs1 [31:0] $end
 $var wire 32 ( rs2 [31:0] $end
-$var wire 32 ) sub_res [31:0] $end
-$var wire 1 * comp_res $end
+$var wire 1 ) zero $end
+$var wire 32 * sub_res [31:0] $end
 $var reg 32 + result_r [31:0] $end
 $upscope $end
 $upscope $end
@@ -26,8 +26,8 @@ $enddefinitions $end
 #0
 $dumpvars
 bx +
-x*
-bx )
+bx *
+x)
 bx (
 bx '
 bx &
@@ -38,17 +38,17 @@ bx "
 1!
 $end
 #10
-1*
+0!
+0)
 b1 &
 b1 +
-0!
-b1 )
-b1 #
-b1 (
-b10 "
-b10 '
-b1 $
-b1 %
+b11111111111111111111111111111100 *
+b101 #
+b101 (
+b1 "
+b1 '
+b1001 $
+b1001 %
 #20
 1!
 #30
