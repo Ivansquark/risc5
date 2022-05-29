@@ -1,0 +1,60 @@
+$date
+	Sun May 29 21:08:35 2022
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	100ps
+$end
+$scope module test_decoder $end
+$var reg 3 ! funct3 [14:12] $end
+$var reg 7 " funct7 [31:25] $end
+$var reg 7 # opcode [6:0] $end
+$scope module dec1 $end
+$var wire 1 $ alu_src $end
+$var wire 3 % funct3 [14:12] $end
+$var wire 7 & funct7 [31:25] $end
+$var wire 3 ' imm_src [2:0] $end
+$var wire 1 ( mem_we $end
+$var wire 7 ) op [6:0] $end
+$var wire 1 * pc_src $end
+$var wire 1 + reg_we $end
+$var wire 2 , res_src [1:0] $end
+$var wire 1 - zero $end
+$var reg 4 . alu_ctrl [3:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx .
+z-
+bz ,
+z+
+z*
+bx )
+z(
+bz '
+bx &
+bx %
+z$
+bx #
+bx "
+bx !
+$end
+#10
+b110011 #
+b110011 )
+#20
+b0 "
+b0 &
+#30
+b0 .
+b0 !
+b0 %
+#80
+b10 .
+b100 !
+b100 %
+#100
