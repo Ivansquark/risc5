@@ -12,7 +12,6 @@
 `define opcode_Eb   7'b0110011
 
 // for rv_alu
-//              FROM main decoder TODO: remove this to definition file and bind to MainDecoder
 `define ALU_ADD      4'b0000     //  rd = rs1 + rs2;        add
 `define ALU_SUB      4'b0001     //  rd = rs1 - rs2;        sub //set zero output
 `define ALU_XOR      4'b0010     //  rd = rs1 ^ rs2;        exclusively or
@@ -24,4 +23,20 @@
 
 `define ALU_SLT      4'b1000     //  rd = rs1 < rs2;        set rd=1 if less than           (0xFF<0 true) 
 `define ALU_SLTU     4'b1001     //  rd = rs1 < rs2;        set rd=1 if less than unsigned  (0xFF<0 false)
+
+// alu_rs2 multiplexer
+`define ALU_MUX_REG_REG 1'b0
+`define ALU_MUX_REG_IMM 1'b1
+
+// result multiplexer
+`define RES_MPX_ALU 2'b00
+`define RES_MPX_MEM 2'b01
+`define RES_MPX_PC4 2'b10
+
+// load module
+`define LOAD_B      3'b000
+`define LOAD_HW     3'b001
+`define LOAD_W      3'b010
+`define LOAD_BU     4'b011
+`define LOAD_HWU    3'b100
 

@@ -1,3 +1,4 @@
+`include "../rv_defs.v"
 module result_mux(
     input [1:0] res_src,
     input [31:0]alu_res,
@@ -8,9 +9,9 @@ module result_mux(
 
 always @* begin
     case(res_src)
-        2'b00: res = alu_res;
-        2'b01: res = mem;
-        2'b10: res = pc_plus4;
+        `RES_MPX_ALU: res = alu_res;
+        `RES_MPX_MEM: res = mem;
+        `RES_MPX_PC4: res = pc_plus4;
         default: res = alu_res;
     endcase 
 end

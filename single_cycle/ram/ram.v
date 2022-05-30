@@ -3,9 +3,9 @@ module ram (
 ) 
 (
     input clk,
-    input we,
+    input [1:0]we,
     // 1024*32 bits = 1024*4 bytes = 4 Kb 
-    input [N-1, 0]address, 
+    input [N-1, 2]address, 
     input [31:0]data_in,
     output [31:0]data_out,
 );
