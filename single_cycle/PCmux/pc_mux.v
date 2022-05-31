@@ -5,6 +5,6 @@ module pc_mux(
     output [31:0]pc_next
 );
 
-assign pc_next = (pc_src) ? pc_target : pc_plus;
+assign pc_next = (pc_src) ? pc_target : pc_plus4;
 
 endmodule

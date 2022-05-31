@@ -43,5 +43,7 @@
 `define STORE_B     2'b00
 `define STORE_HW    2'b01
 `define STORE_W     2'b10
-
+// pc_mux
+`define PC_MUX_PLUS4    0
+`define PC_MUX_TARGET   1
 

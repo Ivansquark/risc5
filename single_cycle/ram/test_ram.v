@@ -23,20 +23,23 @@ always begin
 end
 
 initial begin
+    clk = 0;
+    mem_ctrl = 0;
     we = 1;
+    address = 0;
     in = 32'h12345678;
     #1
-    address = 0;
+    address = 1;
     mem_ctrl = 0;
     #2
-    address = 4;
+    address = 2;
     mem_ctrl = 1;
     #2
     address = 8;
     mem_ctrl = 2;
     
     #2
-    address = 13;
+    address = 9;
     mem_ctrl = 0;
     
     #2

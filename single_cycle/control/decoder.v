@@ -52,7 +52,7 @@ always @* begin
             else if(funct3 == 3'h3) alu_ctrl = `ALU_SLTU;
         end
         `opcode_Ib: begin
-            mem_we = 0;
+            mem_we      = 0;
             res_src     = `RES_MPX_MEM;
             alu_ctrl    = `ALU_ADD;
             alu_src     = `ALU_MUX_REG_IMM;
@@ -66,12 +66,28 @@ always @* begin
             endcase
         end
         `opcode_S: begin
-            mem_we = 1;
+            mem_we      = 1;
+            alu_ctrl    = `ALU_ADD;
+            alu_src     = `ALU_MUX_REG_IMM;
             case(funct3)
                 `STORE_B:   mem_ctrl = `STORE_B;
                 `STORE_HW:  mem_ctrl = `STORE_HW;
                 `STORE_W:   mem_ctrl = `STORE_W;
                 default:    mem_ctrl = `STORE_W;
+            endcase
+        end
+        `opcode_B: begin
+            alu_src = `ALU_MUX_REG_REG;
+            case(funct3)
+                3'h0: begin
+                    alu_ctrl = `ALU_SUB;
+                    pc_src = (zero) ? `PC_MUX_TARGET : `PC_MUX_PLUS4;
+                end
+                3'h1: begin
+                    alu_ctrl = `ALU_SUB;
+                    pc_src = (!zero) ? `PC_MUX_TARGET : `PC_MUX_PLUS4;
+                end
+                //TODO: < >= ...
             endcase
         end
     endcase
