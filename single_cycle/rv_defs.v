@@ -37,6 +37,11 @@
 `define LOAD_B      3'b000
 `define LOAD_HW     3'b001
 `define LOAD_W      3'b010
-`define LOAD_BU     4'b011
+`define LOAD_BU     3'b011
 `define LOAD_HWU    3'b100
+// ram
+`define STORE_B     2'b00
+`define STORE_HW    2'b01
+`define STORE_W     2'b10
+
 

@@ -13,7 +13,7 @@ module decoder (
     output alu_src,
     output [2:0]imm_src,
     output [1:0]reg_we,
-    output [2:0]load_enable
+    output [2:0]mem_ctrl
 );
 
 always @* begin
@@ -52,15 +52,26 @@ always @* begin
             else if(funct3 == 3'h3) alu_ctrl = `ALU_SLTU;
         end
         `opcode_Ib: begin
+            mem_we = 0;
             res_src     = `RES_MPX_MEM;
             alu_ctrl    = `ALU_ADD;
             alu_src     = `ALU_MUX_REG_IMM;
             case (funct3)
-                `LOAD_B:    load_enable = `LOAD_B;  
-                `LOAD_HW:   load_enable = `LOAD_HW;  
-                `LOAD_W:    load_enable = `LOAD_W;  
-                `LOAD_BU:   load_enable = `LOAD_BU;  
-                `LOAD_HWU:  load_enable = `LOAD_HWU;
+                `LOAD_B:    mem_ctrl = `LOAD_B;  
+                `LOAD_HW:   mem_ctrl = `LOAD_HW;  
+                `LOAD_W:    mem_ctrl = `LOAD_W;  
+                `LOAD_BU:   mem_ctrl = `LOAD_BU;  
+                `LOAD_HWU:  mem_ctrl = `LOAD_HWU;
+                default:    mem_ctrl = `LOAD_W;
+            endcase
+        end
+        `opcode_S: begin
+            mem_we = 1;
+            case(funct3)
+                `STORE_B:   mem_ctrl = `STORE_B;
+                `STORE_HW:  mem_ctrl = `STORE_HW;
+                `STORE_W:   mem_ctrl = `STORE_W;
+                default:    mem_ctrl = `STORE_W;
             endcase
         end
     endcase
