@@ -3,7 +3,7 @@
 module decoder (
     input [6:0]op,
     input [14:12]funct3,
-    input [31:25]funct7,
+    input [30]funct7,
     input zero,
 
     output reg pc_src,
@@ -25,8 +25,8 @@ always @* begin
             res_src = `RES_MUX_ALU;
             alu_src = `ALU_MUX_REG_REG;
             if(funct3 == 0) begin
-                if(funct7 == 7'h00) alu_ctrl = `ALU_ADD;
-                else if(funct7 == 7'h20) alu_ctrl = `ALU_SUB;
+                if(funct7 == 1'b0) alu_ctrl = `ALU_ADD;
+                else if(funct7 == 1'b1) alu_ctrl = `ALU_SUB;
             end
             else if(funct3 == 3'h4) alu_ctrl = `ALU_XOR;
             else if(funct3 == 3'h6) alu_ctrl = `ALU_OR;
@@ -51,8 +51,8 @@ always @* begin
             else if(funct3 == 3'h7) alu_ctrl = `ALU_AND;
             else if(funct3 == 3'h1) alu_ctrl = `ALU_SLL;
             else if(funct3 == 3'h5) begin
-                if(funct7 == 7'h00) alu_ctrl = `ALU_SRL;
-                else if(funct7 == 7'h20) alu_ctrl = `ALU_SRA;
+                if(funct7 == 1'b0) alu_ctrl = `ALU_SRL;
+                else if(funct7 == 1'b1) alu_ctrl = `ALU_SRA;
             end
             else if(funct3 == 3'h2) alu_ctrl = `ALU_SLT;
             else if(funct3 == 3'h3) alu_ctrl = `ALU_SLTU;
