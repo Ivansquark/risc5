@@ -1,4 +1,4 @@
-module alu_rs2_mpx(
+module alu_src_mux(
     input alu_src,
     input [31:0]rd2,
     input [31:0]imm_ext,

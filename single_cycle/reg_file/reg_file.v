@@ -1,9 +1,9 @@
-module reg (
+module reg_file(
     input           clk,
     input           we3,
-    input [4:0]     a1, a2, a3, //32 regs addresses
-    input [31:0]    wd3,
-    output          rd1, rd2    
+    input   [4:0]   a1, a2, a3, //32 regs addresses
+    input   [31:0]  wd3,
+    output  [31:0]  rd1, rd2    
 );
 
 reg [31:0] rf[31:0]; //32 regs 32 bits

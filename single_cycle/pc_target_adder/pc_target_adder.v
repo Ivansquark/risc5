@@ -4,6 +4,6 @@ module pc_target_add (
     output [31:0]pc_target
 );
 
-assign pc_taget = pc_next + imm_ext;
+assign pc_target = pc_next + imm_ext;
 
 endmodule

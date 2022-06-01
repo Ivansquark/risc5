@@ -1,11 +1,14 @@
 module pc_reg(
     input clk,
+    input en,                   // for debugger
+    input reset,
     input [31:0]pc_prev,
-    output [31:0]pc_next
+    output reg [31:0]pc_next
 );
 
-always @(posedge clk) begin
-    pc_next <= pc_prev;
+always @(posedge clk, en, reset) begin
+    if(en) pc_next <= pc_prev;
+    if(!reset) pc_next <= 32'h00000000;
 end
 
 endmodule

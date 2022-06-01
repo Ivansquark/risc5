@@ -16,7 +16,7 @@ initial begin
 end
 
 initial begin
-    #1 opcode = `opcode_R;
+    #1 opcode = `OP_R;
     #1 funct7 = 0;
     #1 funct3 = 0;
     #5 funct3 = 4;
