@@ -6,7 +6,8 @@ module single_cycle(
     //to core from top
     input clk,
     input enable,
-    input reset  
+    input reset,
+    output [31:0]single_reg  
 );
 //outputs
 //core
@@ -37,7 +38,8 @@ rom rom0(
 ram ram0(
     clk,                                        //from top
     ram_we, mem_ctrl, alu_res, ram_write_data,  //from core
-    ram_read_data                               //to core and in future to i/o
+    ram_read_data,                              //to core and in future to i/o
+    single_reg
 );
 
 endmodule

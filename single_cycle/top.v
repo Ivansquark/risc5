@@ -3,11 +3,12 @@
 module top(
     input clk,
     input enable,
-    input reset
+    input reset,
+    output [31:0]single_reg
 );
 
 single_cycle processor0(
-    clk, enable, reset
+    clk, enable, reset, single_reg
 );
 
 endmodule

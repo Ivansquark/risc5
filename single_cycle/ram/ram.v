@@ -9,14 +9,23 @@ module ram #(
     input [1:0]mem_ctrl,
     input   [31:0]address, 
     input   [31:0]data_in,
-    output  reg [31:0]data_out
+    output  reg [31:0]data_out,
+    output [31:0]single_reg
 );
 
 // 1024*32 bits = 1024*4 bytes = 4 Kb 
 reg [31:0]mem[2**N-1:0];
 
+integer i;
+initial begin
+    for(i=0; i<2**N; i=i+1)
+        mem[i] = 0;
+end
+
 // memory reads addresses aligned on 4
 wire [29:0]word_addr = address[31:2];
+
+assign single_reg = mem[32];
 
 always @(posedge clk) begin
     if (we) begin
