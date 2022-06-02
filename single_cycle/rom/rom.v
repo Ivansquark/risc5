@@ -8,10 +8,10 @@ parameter WIDTH = 32) // - flash size in bits (= 4KB)
 
 reg [WIDTH - 1 : 0] mem[LENGTH - 1 : 0]; //array of registers
 
-assign instruction = mem[address[WIDTH-1 : 2]]; //address must be aligned on 4
-
 initial begin
     $readmemh("program.hex", mem); //fill rom (for altera)
 end
+
+assign instruction = mem[address[WIDTH-1 : 2]]; //address must be aligned on 4
 
 endmodule

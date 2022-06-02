@@ -63,9 +63,10 @@ wire [31:0]pc_target; //to pc_mux::pc_target, to result_mux::auipc
 wire [31:0]imm_ext; //to alu_src_mux::imm_ext, to result_mux::lui, to pc_target_adder::imm_ext;
 
 assign pc_out = pc;
+assign write_data = rd2;
 
 pc_mux pc_mux0(.pc_src(pc_src), .pc_plus4(pc_plus4), .pc_target(pc_target), .pc_alu(alu_res), .pc_prev(pc));
-pc_reg pc_reg0(clk, en, reset, pc_next, pc);
+pc_reg pc_reg0(clk, reset, pc_next, pc);
 reg_file regfile0(clk, reg_file_we3, instr_A1, instr_A2, instr_A3, res_res, rd1, rd2);
 alu_src_mux alu_src_mux0(alu_src, rd2, imm_ext, rs2);
 rv_alu rv_alu0(alu_ctrl, rd1, rs2, alu_res, zero);

@@ -1,7 +1,7 @@
 `include "../rv_defs.v"
 
 module ram #(
-    parameter N = 10
+    parameter N = 4
 ) 
 (
     input clk,
@@ -25,7 +25,7 @@ end
 // memory reads addresses aligned on 4
 wire [29:0]word_addr = address[31:2];
 
-assign single_reg = mem[32];
+assign single_reg = data_out;
 
 always @(posedge clk) begin
     if (we) begin
