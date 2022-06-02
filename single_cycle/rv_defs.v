@@ -8,8 +8,7 @@
 `define OP_J_JALR   7'b1100111
 `define OP_U_LUI    7'b0110111
 `define OP_U_AUIPC  7'b0010111
-`define OP_E_CALL   7'b1110011
-`define OP_E_BREAK  7'b0110011
+`define OP_E_BREAK  7'b1110011
 
 // for rv_alu
 `define ALU_ADD      4'b0000     //  rd = rs1 + rs2;        add

@@ -15,6 +15,7 @@ always @* begin
                 2'b01: out = {{24{in[15]}}, in[15:8]};
                 2'b10: out = {{24{in[23]}}, in[23:16]};
                 2'b11: out = {{24{in[31]}}, in[31:24]};
+                default: out = 32'bx;
             endcase
         end
         
@@ -40,6 +41,7 @@ always @* begin
                 2'b01: out = {{24{1'b0}}, in[15:8]};
                 2'b10: out = {{24{1'b0}}, in[23:16]};
                 2'b11: out = {{24{1'b0}}, in[31:24]};
+                default: out = 32'bx;
             endcase
         end
         
@@ -51,7 +53,7 @@ always @* begin
                 default: out = 32'bx;
             endcase
         end
-
+        default: out = 32'bx;
     endcase
 end
 

@@ -2,11 +2,14 @@
 
 module test_pc_reg();
 
-reg en;
 reg clk;
+reg en;
+reg reset;
 reg [31:0] in;
+wire [31:0] out;
 
-pc_reg pc1(.en(en), .clk(clk), .pc_prev(in));
+pc_reg pc1(.clk(clk), .en(en), .pc_prev(in)); // if not all ports
+//pc_reg pc1(clk, en, reset, in, out); // ports must be fully mapped 
 
 initial begin
     $dumpvars;

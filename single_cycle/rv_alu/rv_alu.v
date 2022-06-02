@@ -1,4 +1,3 @@
-
 /*
 *************************************
 **********   RISC-V ALU   *********** 
@@ -10,7 +9,7 @@ module rv_alu(
     input   [31:0]rs1,
     input   [31:0]rs2,
 	output  [31:0]rd,
-    output  zero    // zero
+    output  reg zero    // zero
 );
     reg [31:0]result_r;
     
@@ -19,12 +18,14 @@ module rv_alu(
     assign sub_res = rs1 - rs2;
 
     always @ (*) begin
+        result_r = sub_res;
+        zero = 0;
         case (op_in)
             ////////////    arithmetic  ////////////////////
             `ALU_ADD:   result_r = rs1 + rs2;  // non blocked (result in register)
             `ALU_SUB:   begin 
                 result_r = sub_res; //rs1 - rs2;
-                zero = (!sub_res) ? 1 : 0;
+                zero = (!sub_res) ? 1'b1 : 1'b0;
             end
             ////////////    logical     ////////////////////
             `ALU_XOR:   result_r = rs1 ^ rs2;
@@ -49,7 +50,8 @@ module rv_alu(
             `ALU_SLTU: begin
                 result_r = (rs1 < rs2) ? 32'h1 : 32'h0;
                 zero = result_r[0];
-            end    
+            end
+            default: zero = 0;    
         endcase
 	end
 	//assign comp_res = result_r[0];
