@@ -5,7 +5,6 @@
 module single_cycle(
     //to core from top
     input clk,
-    input enable,
     input reset,
     output [31:0]single_reg  
 );
@@ -22,7 +21,7 @@ wire [31:0]instr;           //to core
 wire [31:0]ram_read_data;   //to core
 
 core core0(
-    clk, enable, reset,     //from top
+    clk, reset,     //from top
     instr,                  //from rom
     pc,                     //to rom
     ram_read_data,          //from ram

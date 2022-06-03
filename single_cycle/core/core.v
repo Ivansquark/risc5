@@ -3,7 +3,6 @@
 module core(
     // from single_cycle
     input clk,
-    input enable,
     input reset,
     //-----     rom     ------
     input [31:0]instr,  //to decoder and datapath
@@ -45,7 +44,7 @@ decoder decoder0(
 );
 
 datapath datapath0(
-    clk, enable, reset,                         //inputs from core
+    clk, reset,                                 //inputs from core
     pc_src, reg_file_we, alu_src, alu_ctrl,     //inputs from decoder
     mem_ctrl_from_decoder, res_src, imm_src,    //inputs from decoder
     zero,                                       //output to decoder

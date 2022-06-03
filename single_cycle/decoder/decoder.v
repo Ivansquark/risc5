@@ -174,7 +174,7 @@ always @* begin
         end
         // ebreak Enviroment Break (transfer control to debugger)
         `OP_E_BREAK: pc_src = `PC_MUX_BREAK;
-        default: pc_src = `PC_MUX_BREAK;
+        default: pc_src = 0;
     endcase
 end
 

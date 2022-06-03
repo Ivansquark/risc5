@@ -6,6 +6,8 @@ module pc_reg(
     output reg [31:0]pc_next
 );
 
+initial pc_next = 0;
+
 always @(posedge clk) begin
     if(reset) pc_next <= pc_prev;
     else pc_next <= 32'h00000000;

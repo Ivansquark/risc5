@@ -8,7 +8,6 @@ module imm_sign_ext (
 always @* begin
     case (imm_src)
         // Immediate, load
-
         `IMM_I: imm_out = {{20{instr[31]}},    //31-12 
                                 instr[31:20]};  //11-0
         // Store      
@@ -29,7 +28,7 @@ always @* begin
                             instr[19:12],       //19-12
                             instr[20],          //11
                             instr[30:21], 1'b0};    //10-1 0
-        default: imm_out = 32'bx;
+        default: imm_out = 0;
     endcase  
 end
 

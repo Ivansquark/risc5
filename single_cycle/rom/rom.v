@@ -1,5 +1,5 @@
 module rom #(
-parameter LENGTH = 1024, 
+parameter LENGTH = 32, 
 parameter WIDTH = 32) // - flash size in bits (= 4KB)
 (
     input  [WIDTH - 1 : 0] address,    // Program Counter

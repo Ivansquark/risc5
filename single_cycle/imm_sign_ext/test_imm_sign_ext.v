@@ -14,8 +14,17 @@ initial begin
 end
 
 initial begin
-    #1 imm_src = 0;
-    #1 instruction = 32'hFFFFFFFF;
+    imm_src = 0;
+    #1;
+    instruction = 32'hFFFFFFFF;
+    #1;
+    imm_src = 1;
+    #1;
+    imm_src = 2;
+    #1;
+    imm_src = 3;
+    #1;
+    imm_src = 0;
 end
 
 endmodule

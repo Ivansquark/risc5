@@ -3,16 +3,20 @@
 module test_datapath();
 
 reg clk=0;
-reg en=0;
-reg reset=0;
+reg reset=1;
+reg [1:0]pc_src = 0;
 
-datapath datapath1(.clk(clk), .en(en), .reset(reset));
+datapath datapath1(.clk(clk), .reset(reset), .pc_src(pc_src));
 
 initial begin
     $dumpvars;
     $display("test started");
     #10;
     $finish();
+end
+
+always begin
+    #1; clk = ~clk;
 end
 
 endmodule

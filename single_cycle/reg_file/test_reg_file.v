@@ -21,11 +21,11 @@ end
 
 initial begin
     clk=0;
-    #1;
+    #3;
     we3 = 1;
     a3 = 1;
     wd3 = 32'h0000FFFF;
-    #3;
+    #2;
     a3 = 2;
     wd3 = 32'hFFFF0000;
     a1 = 1;
