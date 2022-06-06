@@ -2,7 +2,7 @@
 `include "../led/led.v"
 `include "../uart/uart.v"
 `include "../ram/ram.v"
-`include "../load_mux"
+`include "../load_mux/load_mux.v"
 
 module io_ram_datapath(
     input clk,
@@ -13,7 +13,7 @@ module io_ram_datapath(
     input rx,
     output [31:0]rd,
     output [7:0]led_out,
-    output tx,
+    output tx
 );
 
 wire we_ram;
@@ -22,8 +22,8 @@ wire we_led;
 wire [31:0] address_to_ram;
 wire [2:0]uart_reg_mux_out;
 wire load_mux;
-wire rd_uart;
-wire rd_ram;
+wire [31:0]rd_uart;
+wire [31:0]rd_ram;
 
 io_ram_decoder io_ram_decoder0(
     address,we,
@@ -32,6 +32,7 @@ io_ram_decoder io_ram_decoder0(
 
 led led0(
     we_led,
+    wd[7:0],
     led_out);
 
 uart uart0(

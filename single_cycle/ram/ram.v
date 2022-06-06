@@ -1,5 +1,4 @@
 `include "../rv_defs.v"
-`include "../led/led.v"
 
 module ram #(
     parameter N = 4
@@ -10,7 +9,7 @@ module ram #(
     input [1:0]mem_ctrl,
     input   [31:0]address, 
     input   [31:0]data_in,
-    output  reg [31:0]data_out,
+    output  reg [31:0]data_out
 );
 
 // 1024*32 bits = 1024*4 bytes = 4 Kb 

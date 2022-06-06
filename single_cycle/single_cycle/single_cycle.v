@@ -1,6 +1,6 @@
 `include "../core/core.v"
 `include "../rom/rom.v"
-`include "../io_ram_datapath"
+`include "../io_ram_datapath/io_ram_datapath.v"
 //TODO: inputs firmware to rom; outputs to i/o system from ram
 module single_cycle(
     //to core from top
