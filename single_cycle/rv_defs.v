@@ -40,13 +40,16 @@
 `define IMM_U 3'h3 // [31:12]imm(31-12)
 `define IMM_J 3'h4 // [20]imm(31) [19:12]imm(19-12) [11]imm(20) [10:1]imm(30-21)
 
-
 // load module
 `define LOAD_B      3'b000
 `define LOAD_HW     3'b001
 `define LOAD_W      3'b010
 `define LOAD_BU     3'b011
 `define LOAD_HWU    3'b100
+// load mux
+`define LOAD_MUX_RAM    0
+`define LOAD_MUX_UART   1
+
 // ram
 `define STORE_B     2'b00
 `define STORE_HW    2'b01
@@ -56,3 +59,21 @@
 `define PC_MUX_TARGET   2'b01
 `define PC_MUX_ALU      2'b10
 `define PC_MUX_BREAK    2'b11
+
+//IO... if address 22bit == 1 => IO else if 22bit == 0 =>RAM
+//leds      
+`define LED_REG_ADDR    32'h00400000 //last two bit=0
+//uart
+`define UART_CTRL_REG   32'h00400100
+`define UART_STAT_REG   32'h00400104
+`define UART_BAUD_REG   32'h00400108
+`define UART_TDR_REG    32'h0040010C
+`define UART_RDR_REG    32'h00400110
+//uart registers multiplexer
+`define UART_MUX_CTRL   0
+`define UART_MUX_STAT   1
+`define UART_MUX_BAUD   2
+`define UART_MUX_TDR    3
+`define UART_MUX_RDR    4
+
+

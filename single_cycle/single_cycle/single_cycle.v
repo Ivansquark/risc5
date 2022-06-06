@@ -1,12 +1,15 @@
 `include "../core/core.v"
 `include "../rom/rom.v"
-`include "../ram/ram.v"
+`include "../io_ram_datapath"
 //TODO: inputs firmware to rom; outputs to i/o system from ram
 module single_cycle(
     //to core from top
     input clk,
     input reset,
-    output [31:0]single_reg  
+    input rx,
+    output [31:0]single_reg,
+    output [7:0]led_out,
+    output tx
 );
 //outputs
 //core
@@ -34,11 +37,16 @@ rom rom0(
     instr                   //to core
 );
 
-ram ram0(
-    clk,                                        //from top
-    ram_we, mem_ctrl, alu_res, ram_write_data,  //from core
-    ram_read_data,                              //to core and in future to i/o
-    single_reg
+io_ram_datapath io_ram_datapath0(
+    clk, alu_res, ram_write_data, ram_we, mem_ctrl, rx,
+    ram_read_data, led_out, tx
 );
+
+//ram ram0(
+//    clk,                                        //from top
+//    ram_we, mem_ctrl, alu_res, ram_write_data,  //from core
+//    ram_read_data,                              //to core and in future to i/o
+//   single_reg
+//);
 
 endmodule
