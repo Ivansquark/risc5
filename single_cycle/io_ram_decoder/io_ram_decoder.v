@@ -14,6 +14,7 @@ wire isIO = address[22];
 wire isRam = !isIO;
 
 always @* begin
+    address_to_ram = address;
     if(isRam) begin
         if(we)  we_ram = 1;
         else    we_ram = 0;

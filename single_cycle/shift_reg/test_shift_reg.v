@@ -3,12 +3,11 @@
 module test_shift_reg();
 
 reg clk;
-reg reset;
 reg [7:0]par_in;
 reg ser_in;
 reg load;
 
-shift_reg shift_reg0(.clk(clk), .reset(reset), .par_in(par_in), .ser_in(ser_in), .load(load));
+shift_reg shift_reg0(.clk(clk), .par_in(par_in), .ser_in(ser_in), .load(load));
 
 initial begin
     $dumpvars;
@@ -19,15 +18,13 @@ end
 
 initial begin
     clk = 0;
-    reset = 1;
     ser_in = 1;
     load = 0;
     // test out
     //par_in = 8'h01;
-    //#1; reset = 0; load = 1; 
     //#1; load = 0;
     // test in
-    #1 ser_in = 0; reset = 0;
+    #1 ser_in = 0; 
     #1 ser_in = 1;
     #2 ser_in = 0;
 end

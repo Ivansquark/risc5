@@ -2,7 +2,7 @@
 
 module test_load_mux();
 
-reg in;
+reg in=0;
 
 load_mux mux0(.in(in));
 

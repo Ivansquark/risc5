@@ -12,4 +12,8 @@ initial begin
     #10; $finish();
 end
 
+initial begin
+    address = 0;
+end
+
 endmodule

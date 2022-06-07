@@ -9,8 +9,8 @@ single_cycle processor0(.clk(clk), .reset(reset));
 
 initial begin
     $dumpvars;
-    $display("test started");
-    #20;
+    $display("test starteddd");
+    #100;
     $finish();
 end
 

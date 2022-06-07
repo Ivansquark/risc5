@@ -6,25 +6,35 @@ reg we;
 reg clk;
 reg [2:0]reg_num;
 reg [31:0]wd;
+reg rx;
 
-uart uart0(.we(we), .clk(clk), .reg_num(reg_num), .wd(wd));
+uart uart0(.we(we), .clk(clk), .reg_num(reg_num), .rx(rx), .wd(wd));
 
 initial begin
     $dumpvars;
     $display("test started");
-    #50; $finish();
+    #100; $finish();
 end
 
 initial begin
     we = 1;
     clk = 0;
     reg_num = 3;
-    wd = 32'h00000007F;
+    wd = 32'h0000007F;
+    rx = 1;
     #2;
     reg_num = 0;
     wd = 1;
-    #2;
+    //cahnge brrr
+    //#2; reg_num = 2; wd = 0;
+    #4;
     we = 0;
+// receive test
+   rx = 0;
+   #4; rx = 1;
+   #4; rx = 1;
+   #4; rx = 0;
+
 end
 
 always begin

@@ -14,7 +14,7 @@ reg clk = 1'b0;
 
 always begin
     #0 clk = ~clk; /* Toggle clock every 1ns */
-    #1 opcode = 9; // add
+    #1 opcode = 8; // slt
     in1 = 1;
     in2 = 5;    
 end
