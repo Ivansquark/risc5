@@ -1,0 +1,42 @@
+
+build/prog.elf:     формат файла elf32-littleriscv
+
+
+Дизассемблирование раздела .text:
+
+00000198 <main>:
+ 198:	00001137          	lui	sp,0x1
+ 19c:	00400437          	lui	s0,0x400
+ 1a0:	10840413          	addi	s0,s0,264 # 400108 <UART_BAUD_REG>
+ 1a4:	00000493          	li	s1,0
+ 1a8:	00942023          	sw	s1,0(s0)
+ 1ac:	00400437          	lui	s0,0x400
+ 1b0:	10c40413          	addi	s0,s0,268 # 40010c <UART_TDR_REG>
+ 1b4:	04f00493          	li	s1,79
+ 1b8:	00942023          	sw	s1,0(s0)
+ 1bc:	00400437          	lui	s0,0x400
+ 1c0:	10040413          	addi	s0,s0,256 # 400100 <UART_CTRL_REG>
+ 1c4:	00100493          	li	s1,1
+ 1c8:	00942023          	sw	s1,0(s0)
+
+000001cc <check_tx_complete0>:
+ 1cc:	00400537          	lui	a0,0x400
+ 1d0:	10450513          	addi	a0,a0,260 # 400104 <UART_STAT_REG>
+ 1d4:	00052583          	lw	a1,0(a0)
+ 1d8:	0015f593          	andi	a1,a1,1
+ 1dc:	feb018e3          	bne	zero,a1,1cc <check_tx_complete0>
+ 1e0:	00400437          	lui	s0,0x400
+ 1e4:	10c40413          	addi	s0,s0,268 # 40010c <UART_TDR_REG>
+ 1e8:	05000493          	li	s1,80
+ 1ec:	00942023          	sw	s1,0(s0)
+ 1f0:	00400437          	lui	s0,0x400
+ 1f4:	10040413          	addi	s0,s0,256 # 400100 <UART_CTRL_REG>
+ 1f8:	00100493          	li	s1,1
+ 1fc:	00942023          	sw	s1,0(s0)
+
+00000200 <check_tx_complete1>:
+ 200:	00400537          	lui	a0,0x400
+ 204:	10450513          	addi	a0,a0,260 # 400104 <UART_STAT_REG>
+ 208:	00052583          	lw	a1,0(a0)
+ 20c:	0015f593          	andi	a1,a1,1
+ 210:	feb018e3          	bne	zero,a1,200 <check_tx_complete1>
