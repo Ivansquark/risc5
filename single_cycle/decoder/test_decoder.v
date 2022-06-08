@@ -25,12 +25,13 @@ initial begin
     funct3 = instruction[14:12];
     funct7  = instruction[30];
     #1;
-    instruction = 32'h00500113;
+    instruction = 32'h00000063;
     opcode = instruction[6:0];
     funct3 = instruction[14:12];
     funct7  = instruction[30];
-
+    zero = 1;
     #1;
+    zero = 0;
     instruction = 32'h00C00193;
     opcode = instruction[6:0];
     funct3 = instruction[14:12];

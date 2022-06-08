@@ -9,9 +9,10 @@ module rv_alu(
     input   [31:0]rs1,
     input   [31:0]rs2,
 	output  [31:0]rd,
-    output  reg zero    // zero
+    output  zero    // zero
 );
     reg [31:0]result_r;
+    reg temp_zero = 0;
     
     wire [31:0]sub_res;
 	
@@ -19,13 +20,13 @@ module rv_alu(
 
     always @ (*) begin
         result_r = sub_res;
-        zero = 0;
+        temp_zero = 0;
         case (op_in)
             ////////////    arithmetic  ////////////////////
             `ALU_ADD:   result_r = rs1 + rs2;  // non blocked (result in register)
             `ALU_SUB:   begin 
                 result_r = sub_res; //rs1 - rs2;
-                zero = (!sub_res) ? 1'b1 : 1'b0;
+                temp_zero = (!sub_res) ? 1'b1 : 1'b0;
             end
             ////////////    logical     ////////////////////
             `ALU_XOR:   result_r = rs1 ^ rs2;
@@ -45,15 +46,16 @@ module rv_alu(
                 else 
                     result_r  = sub_res[31] ? 32'h1 : 32'h0;    // 00 - 01 => 00 + 11 = 11 => true
                 
-                zero = result_r[0];
+                temp_zero = result_r[0];
              end
             `ALU_SLTU: begin
                 result_r = (rs1 < rs2) ? 32'h1 : 32'h0;
-                zero = result_r[0];
+                temp_zero = result_r[0];
             end
-            default: zero = 0;    
+            default: temp_zero = 0;    
         endcase
 	end
 	//assign comp_res = result_r[0];
 	assign rd = result_r;
+    assign zero = temp_zero;
 endmodule 

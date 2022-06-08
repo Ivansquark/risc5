@@ -17,8 +17,8 @@ module core(
 
 // from rom to decoder
 wire [6:0]instr_op      = instr[6:0];
-wire [14:12]instr_func3 = instr[14:12];
-wire instr_func7        = instr[30];
+wire [14:12]instr_funct3 = instr[14:12];
+wire instr_funct7        = instr[30];
 // from rom to datapath
 wire [19:15]instr_A1    = instr[19:15];
 wire [24:20]instr_A2    = instr[24:20];
@@ -39,8 +39,13 @@ wire zero;
 assign mem_ctrl = mem_ctrl_from_decoder[1:0];
 
 decoder decoder0(
-    instr_op, instr_func3, instr_func7, zero,                                               //input
-    pc_src, res_src, reg_file_we, ram_we, alu_ctrl, alu_src, imm_src, mem_ctrl_from_decoder //output
+    .op(instr_op), 
+    .funct3(instr_funct3), .funct7(instr_funct7),
+    .zero(zero),                                               //input
+    .pc_src(pc_src),
+    .res_src(res_src), .reg_file_we(reg_file_we),
+    .mem_we(ram_we), .alu_ctrl(alu_ctrl), .alu_src(alu_src),
+    .imm_src(imm_src), .mem_ctrl(mem_ctrl_from_decoder) //output
 );
 
 datapath datapath0(
@@ -53,4 +58,5 @@ datapath datapath0(
     ram_read_data,                              //input from ram
     alu_res, ram_write_data                     //outputs to ram
 );
+
 endmodule

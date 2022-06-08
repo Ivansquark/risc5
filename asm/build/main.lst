@@ -1,8 +1,8 @@
 
-build/main.o:     формат файла elf32-littleriscv
+build/main.o:     file format elf32-littleriscv
 
 
-Дизассемблирование раздела .text:
+Disassembly of section .text:
 
 00000000 <main>:
    0:	00001137          	lui	sp,0x1

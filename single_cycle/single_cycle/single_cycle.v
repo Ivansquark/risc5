@@ -7,9 +7,8 @@ module single_cycle(
     input clk,
     input reset,
     input rx,
-    output [31:0]single_reg,
-    output [7:0]led_out,
-    output tx
+    output tx,
+    output [7:0]led_out
 );
 //outputs
 //core

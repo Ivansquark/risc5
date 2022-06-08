@@ -3,11 +3,14 @@
 module top(
     input clk,
     input reset,
-    output [31:0]single_reg
+    input rx,
+    output tx,
+    output [7:0]led_out
 );
 
 single_cycle processor0(
-    clk, reset, single_reg
+    clk, reset, rx,
+    tx, led_out
 );
 
 endmodule

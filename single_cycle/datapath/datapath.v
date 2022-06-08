@@ -50,6 +50,7 @@ wire [31:0]rd2; //to alu_src_mux, to output to ram write_data
 wire [31:0]rs2;
 // alu
 wire [31:0]alu_res_internal; //to ram A, to pc_mux::pc_alu, to result_mux::res_alu
+wire zero_wire;
 // load_module
 wire [31:0]load_module_out; //to result_mux::mem
 // result_mux
@@ -64,7 +65,7 @@ wire [31:0]imm_ext; //to alu_src_mux::imm_ext, to result_mux::lui, to pc_target_
 assign pc_out = pc;
 assign write_data = rd2;
 assign alu_res = alu_res_internal; 
-
+//assign zero = zero_wire;
 
 pc_mux pc_mux0(pc_src, pc_plus4, pc_target, alu_res_internal, pc, pc_next);
 pc_reg pc_reg0(clk, reset, pc_next, pc);

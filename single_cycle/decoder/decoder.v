@@ -106,7 +106,7 @@ always @* begin
             case(funct3)
                 // rs1 == rs2
                 3'h0: begin
-                    alu_ctrl = `ALU_SUB;
+                    alu_ctrl = `ALU_SUB;                    
                     pc_src = (zero) ? `PC_MUX_TARGET : `PC_MUX_PLUS4;
                 end
                 // rs1 != rs2

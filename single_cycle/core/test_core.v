@@ -11,14 +11,25 @@ core core0(.clk(clk), .reset(reset), .instr(instr), .ram_read_data(ram_data));
 initial begin
     $dumpvars;
     $display("test started");
-    #10;
+    #20;
     $finish();
 end
 
 initial begin
-    instr = 32'h00500113;
-    #2;
+    #1;
     instr = 32'h00C00193;
+    #2;
+    instr = 32'h40000033;
+    #2;
+    instr = 32'h00000000;
+    #2;
+    instr = 32'h00000000;
+    #2;
+    instr = 32'h00000000;
+    #1;
+    instr = 32'h00000063;
+    #2;
+    instr = 32'hfeb018e3;
     #2;
     instr = 32'hFF718393;
     #2;

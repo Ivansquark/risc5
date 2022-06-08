@@ -14,9 +14,9 @@ reg clk = 1'b0;
 
 always begin
     #0 clk = ~clk; /* Toggle clock every 1ns */
-    #1 opcode = 8; // slt
+    #1 opcode = 1; // slt
     in1 = 1;
-    in2 = 5;    
+    in2 = 1;    
 end
 
 wire clk1; /* For output of tested module */

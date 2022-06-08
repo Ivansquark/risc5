@@ -10,7 +10,7 @@ reg [31:0]rf[31:0]; //32 regs 32 bits
 
 integer i;
 initial begin
-    for(i = 0; i<32; i++)
+    for(i = 0; i<32; i = i + 1)
         rf[i] = 32'h00000000;
 end
 

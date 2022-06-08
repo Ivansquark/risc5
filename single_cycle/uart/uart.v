@@ -3,7 +3,6 @@
 //      is_need_start_tx <= uart_regs[`UART_MUX_CTRL][0];
 //      is_tx_started   <= uart_regs[`UART_MUX_STAT][1];
 //      rx_not_empty = uart_regs[`UART_MUX_STAT][31]; cleared when read RDR
-
 `include "../rv_defs.v"
 `include "../shift_reg/shift_reg.v"
 module uart(
@@ -19,6 +18,12 @@ module uart(
 //registers renew
 reg [31:0] uart_regs[4:0];
 
+initial begin
+    for(i = 0; i < 5; i = i + 1)
+        uart_regs[i] = 0;
+end
+
+// clk divider 
 always @(posedge clk) begin
     case(reg_num)
         `UART_MUX_CTRL: begin
@@ -45,155 +50,7 @@ always @(posedge clk) begin
             end
         end
     endcase
-end
 
-//transmit by FSM (finite state machine) very many of code
-reg [3:0]tx_counter; // count till 8
-reg [31:0]baud_counter_tx;
-reg [7:0]shift_transmit = 0;
-reg current_bit;
-reg Tx;
-reg is_need_start_tx;
-reg is_tx_started;
-integer i;
-
-initial begin
-    for(i = 0; i < 5; i = i + 1) uart_regs[i] = 0;
-    Tx = 1;
-    tx_counter = 0;
-    baud_counter_tx = 0;
-    is_tx_started = 0;
-    is_need_start_tx = 0;
-end
-assign tx = Tx;
-
-always @(posedge clk) begin
-    if(is_need_start_tx) begin
-        uart_regs[`UART_MUX_CTRL][0] <= 0;
-        shift_transmit = uart_regs[`UART_MUX_TDR][7:0];
-        uart_regs[`UART_MUX_STAT][1] <= 1;
-        baud_counter_tx = 0;
-    end
-    if(is_tx_started) begin
-        case(tx_counter)
-            //send start bit
-            0: begin
-                Tx = 0;
-                if(baud_counter_tx == uart_regs[`UART_MUX_BAUD]) begin
-                    tx_counter <= tx_counter + 1;
-                    baud_counter_tx <= 0;
-                    current_bit <= shift_transmit[0];
-                end
-                else baud_counter_tx <= baud_counter_tx + 1;
-            end
-            1: begin
-                Tx <= current_bit; //send first least significant bit
-                if(baud_counter_tx == uart_regs[`UART_MUX_BAUD]) begin
-                    tx_counter <= tx_counter + 1;
-                    baud_counter_tx <= 0;
-                    current_bit <= shift_transmit[1];
-                end
-                else baud_counter_tx <= baud_counter_tx + 1;
-            end
-            2: begin
-                Tx <= current_bit; //send second least significant bit
-                if(baud_counter_tx == uart_regs[`UART_MUX_BAUD]) begin
-                    tx_counter <= tx_counter + 1;
-                    baud_counter_tx <= 0;
-                    current_bit <= shift_transmit[2];
-                end
-                else baud_counter_tx <= baud_counter_tx + 1;
-            end
-            3: begin
-                Tx <= current_bit; //send third least significant bit
-                if(baud_counter_tx == uart_regs[`UART_MUX_BAUD]) begin
-                    tx_counter <= tx_counter + 1;
-                    baud_counter_tx <= 0;
-                    current_bit <= shift_transmit[3];
-                end
-                else baud_counter_tx <= baud_counter_tx + 1;
-            end
-            4: begin
-                Tx <= current_bit; //send fourth least significant bit
-                if(baud_counter_tx == uart_regs[`UART_MUX_BAUD]) begin
-                    tx_counter <= tx_counter + 1;
-                    baud_counter_tx <= 0;
-                    current_bit <= shift_transmit[4];
-                end
-                else baud_counter_tx <= baud_counter_tx + 1;
-            end
-            5: begin
-                Tx <= current_bit; //send fifth least significant bit
-                if(baud_counter_tx == uart_regs[`UART_MUX_BAUD]) begin
-                    tx_counter <= tx_counter + 1;
-                    baud_counter_tx <= 0;
-                    current_bit <= shift_transmit[5];
-                end
-                else baud_counter_tx <= baud_counter_tx + 1;
-            end
-            6: begin
-                Tx <= current_bit; //send sixth least significant bit
-                if(baud_counter_tx == uart_regs[`UART_MUX_BAUD]) begin
-                    tx_counter <= tx_counter + 1;
-                    baud_counter_tx <= 0;
-                    current_bit <= shift_transmit[6];
-                end
-                else baud_counter_tx <= baud_counter_tx + 1;
-            end
-            7: begin
-                Tx <= current_bit; //send seventh least significant bit
-                if(baud_counter_tx == uart_regs[`UART_MUX_BAUD]) begin
-                    tx_counter <= tx_counter + 1;
-                    baud_counter_tx <= 0;
-                    current_bit <= shift_transmit[7];
-                end
-                else baud_counter_tx <= baud_counter_tx + 1;
-            end
-            8: begin
-                Tx <= current_bit; //send stop bit
-                if(baud_counter_tx == uart_regs[`UART_MUX_BAUD]) begin
-                    tx_counter <= tx_counter + 1;
-                    baud_counter_tx <= 0;
-                    current_bit <= 1;   
-                end
-                else baud_counter_tx <= baud_counter_tx + 1;
-            end
-            9: begin
-                Tx <= current_bit; //send stop bit
-                if(baud_counter_tx == uart_regs[`UART_MUX_BAUD]) begin
-                    tx_counter <= 0;
-                    baud_counter_tx <= 0;
-                    current_bit <= 1;
-                    uart_regs[`UART_MUX_STAT][1] <= 0; //stop sending   is_tx_started = 0;
-                    is_tx_started <= 0;
-                end
-                else baud_counter_tx <= baud_counter_tx + 1;
-            end
-        endcase
-    end
-    else begin //tx not started
-        is_need_start_tx <= uart_regs[`UART_MUX_CTRL][0];
-        is_tx_started   <= uart_regs[`UART_MUX_STAT][1];
-    end
-end
-
-// --------------   Receive (by shift register) -----------------------
-wire rx_not_empty = uart_regs[`UART_MUX_STAT][31];
-reg [3:0]rx_counter;
-reg [31:0]baud_counter_clk;
-wire [7:0]rx_data;
-reg is_rx_started;
-reg brr_clk = 0;
-wire [31:0] baud = uart_regs[`UART_MUX_BAUD];
-
-initial begin
-    rx_counter = 0;
-    is_rx_started = 0;
-    baud_counter_clk = 0;
-    brr_clk = 0;
-end
-// clk divider 
-always @(posedge clk) begin
     if(baud == 32'h00000000) begin 
         brr_clk <= clk;
     end
@@ -221,6 +78,21 @@ always @(negedge clk) begin
                 brr_clk <= ~brr_clk;
         end
     end
+end
+// --------------   Receive (by shift register) -----------------------
+wire rx_not_empty = uart_regs[`UART_MUX_STAT][31];
+reg [3:0]rx_counter;
+reg [31:0]baud_counter_clk;
+wire [7:0]rx_data;
+reg is_rx_started;
+reg brr_clk = 0;
+wire [31:0] baud = uart_regs[`UART_MUX_BAUD];
+
+initial begin
+    rx_counter = 0;
+    is_rx_started = 0;
+    baud_counter_clk = 0;
+    brr_clk = 0;
 end
 // shift register with new clk
 shift_reg shift_reg_rx(.clk(brr_clk), .ser_in(rx), .par_out(rx_data));
@@ -251,6 +123,64 @@ always @(posedge brr_clk) begin
                 is_rx_started = 1;
             end
         end
+    end
+end
+
+//transmit by FSM (finite state machine) very many of code
+
+reg [3:0]tx_counter; // count till 8
+reg [31:0]baud_counter_tx;
+reg [7:0]shift_transmit = 0;
+reg [7:0]tx_data = 0;
+reg load = 0;
+reg current_bit;
+reg Tx;
+reg is_need_start_tx;
+reg is_tx_started;
+integer i;
+
+// shift register with new clk
+shift_reg shift_reg_tx(.clk(brr_clk), .ser_out(tx), .par_in(tx_data), .load(load));
+
+initial begin
+    Tx = 1;
+    tx_data[0] = 1;
+    tx_counter = 0;
+    is_tx_started = 0;
+    is_need_start_tx = 0;
+end
+assign tx = Tx;
+
+always @(posedge brr_clk) begin
+    if(is_need_start_tx) begin
+        uart_regs[`UART_MUX_CTRL][0] <= 0;
+        uart_regs[`UART_MUX_STAT][1] <= 1;
+    end
+    if(is_tx_started) begin
+        if(tx_counter == 0) begin
+                Tx = 0;
+                tx_counter <= tx_counter + 1;
+                load = 1;
+                tx_data[0] <= 0;
+        end
+        else if(tx_counter == 1) begin
+                load = 1;
+                tx_data <= uart_regs[`UART_MUX_TDR][7:0];
+                tx_counter <= tx_counter + 1;
+        end
+        else if(tx_counter == 9) begin
+                    tx_counter <= 0;
+                    is_tx_started <= 0;
+                    uart_regs[`UART_MUX_STAT][1] <= 0; //stop sending   is_tx_started = 0;
+        end
+        else begin
+            tx_counter <= tx_counter + 1;
+            load = 0;
+        end
+    end
+    else begin //tx not started
+        is_need_start_tx <= uart_regs[`UART_MUX_CTRL][0];
+        is_tx_started   <= uart_regs[`UART_MUX_STAT][1];
     end
 end
 
