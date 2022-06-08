@@ -26,7 +26,7 @@ initial begin
     reg_num = 0;
     wd = 1;
     //cahnge brrr
-    //#2; reg_num = 2; wd = 0;
+    #2; reg_num = 2; wd = 2;
     #4;
     we = 0;
 // receive test

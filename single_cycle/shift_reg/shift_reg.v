@@ -1,4 +1,4 @@
-module shift_reg #(parameter N = 8) (
+module shift_reg #(parameter N = 9) (
     input clk,
     input [N-1:0]par_in,
     input ser_in,

@@ -18,8 +18,9 @@ initial begin
 end
 
 initial begin
-    #1 
-    address = 4;
+    #1 we=1; 
+    address = 32'h00400000;
+    wd = 32'h00000001;
 end
 
 always begin

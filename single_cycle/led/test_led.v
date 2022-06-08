@@ -2,9 +2,13 @@
 
 module test_led();
 
-reg [31:0]in;
+reg we=1;
+reg [7:0]in;
+wire [7:0]out;
 
-led led0();
+led led0(
+    .we(we), .led_in(in),
+    .led_out(out));
 
 initial begin
     $dumpvars;
@@ -13,14 +17,9 @@ initial begin
 end
 
 initial begin
-    in=0; 
-    led0.led_in=in;
     #1; in=1; 
-    led0.led_in=in;
     #1; in=2; 
-    led0.led_in=in;
     #1; in=4;
-    led0.led_in=in;
 end
 
 endmodule
