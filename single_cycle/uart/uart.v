@@ -30,7 +30,17 @@ reg brr_clk_n = 0;
 wire [31:0] baud = uart_regs[`UART_MUX_BAUD];
 reg [31:0]baud_counter_clk = 0;
 
+reg stat_reg_rx_not_empty = 0;
+reg stat_reg_tx_is_started = 0;
+reg ctrl_reg_tx_need_start = 0;
+reg [7:0]rdr_data = 0;
+
 always @(posedge clk) begin
+   // check ctrl/stat registers
+    uart_regs[`UART_MUX_STAT][31]   <=     stat_reg_rx_not_empty ;
+    uart_regs[`UART_MUX_STAT][0]    <=     stat_reg_tx_is_started;
+    uart_regs[`UART_MUX_CTRL][0]    <=     ctrl_reg_tx_need_start;
+    uart_regs[`UART_MUX_RDR][7:0]   <=     rdr_data;       
     // read/write internal UART registers
     case(reg_num)
         `UART_MUX_CTRL: begin
@@ -57,6 +67,7 @@ always @(posedge clk) begin
             end
         end
     endcase
+    
 
     //clk divider on posedge
     if(baud == 32'h00000000) begin 
@@ -111,10 +122,10 @@ always @(posedge brr_clk) begin
         else begin
             if(rx_counter == 8) begin
                 //receive full byte in shift reg
-                uart_regs[`UART_MUX_RDR][7:0] <= rx_data[8:1];
+                rdr_data <= rx_data[8:1];
                 rx_counter <= 0;
                 is_rx_started <= 0;
-                uart_regs[`UART_MUX_STAT][31] = 1; // set rx_not_empty
+                stat_reg_rx_not_empty <= 1;
             end
             else begin
                 // received start bit in shift register
@@ -138,8 +149,8 @@ reg [31:0]baud_counter_tx;
 reg [7:0]shift_transmit = 0;
 reg [8:0]tx_data = 0;
 reg load = 0;
-reg is_need_start_tx;
-reg is_tx_started;
+reg is_need_start_tx = 0;
+reg is_tx_started = 0;
 integer i;
 // shift register with new clk
 shift_reg shift_reg_tx(.clk(brr_clk), 
@@ -158,10 +169,11 @@ always @(posedge brr_clk) begin
     if(is_need_start_tx) begin
         tx_data <= {uart_regs[`UART_MUX_TDR][7:0], 1'b0};
         load <= 1;
-        uart_regs[`UART_MUX_CTRL][0] <= 0;
-        uart_regs[`UART_MUX_STAT][1] <= 1;
+        ctrl_reg_tx_need_start <= 0;
+        stat_reg_tx_is_started <= 1;//start sending 
     end
-    if(is_tx_started) begin
+    //start transmit
+    if(stat_reg_tx_is_started) begin
         if(tx_counter == 0) begin
             tx_counter <= tx_counter + 1;
             load <= 0;
@@ -173,7 +185,8 @@ always @(posedge brr_clk) begin
         else if(tx_counter == 9) begin
                     tx_counter <= 0;
                     is_tx_started <= 0;
-                    uart_regs[`UART_MUX_STAT][1] <= 0; //stop sending   is_tx_started = 0;
+                    stat_reg_tx_is_started <= 0;//stop sending   is_tx_started = 0;
+
         end
         else begin
             tx_counter <= tx_counter + 1;
@@ -182,7 +195,6 @@ always @(posedge brr_clk) begin
     end
     else begin //tx not started
         is_need_start_tx <= uart_regs[`UART_MUX_CTRL][0];
-        is_tx_started   <= uart_regs[`UART_MUX_STAT][1];
     end
 end
 

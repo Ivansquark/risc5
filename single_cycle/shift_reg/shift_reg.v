@@ -6,6 +6,11 @@ module shift_reg #(parameter N = 9) (
     output reg [N-1:0]par_out,
     output ser_out
 );
+
+initial begin
+    par_out = 1;
+end
+
 always @(posedge clk) begin
     if(load) par_out <= par_in;
     else par_out <= {ser_in, par_out[N-1:1]};
