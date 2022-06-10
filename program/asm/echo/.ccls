@@ -1,0 +1,8 @@
+/opt/riscv32/bin/riscv32-unknown-elf-as
+%c -std=gnu11 -Os -Wall -Wa -march=rv32i -mabi=ilp32 -mcmodel=medlow
+%cpp -std=gnu++17 -Os -Wall -march=rv32i -mabi=ilp32 -mcmodel=medlow -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common
+%h -x
+%h c++-header
+%h %hpp --include=Base.h
+-Iinc/
+-I/opt/riscv32/include/

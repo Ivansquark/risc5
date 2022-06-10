@@ -1,7 +1,7 @@
 .PHONY: all, clean
 
 SRC = src/
-INC = inc/
+INC = inc
 BLD = build/
 
 #CC = riscv64-linux-gnu-gcc
@@ -16,7 +16,7 @@ SIZE = /opt/riscv32/bin/riscv32-unknown-elf-size
 CFLAGS = -g -O0 -march=rv32ima -mabi=ilp32 -mcmodel=medany -nostdlib  
 #-mcmodel=medany
 #LFLAGS = -T$(LIB)gd32f103vf.ld -Xlinker -Map=$(BLD)prog.map
-ASFLAGS = -march=rv32ima -mabi=ilp32 
+ASFLAGS = -g -march=rv32ima -mabi=ilp32 
 
 all: $(BLD)prog.elf $(BLD)prog.bin $(BLD)prog.lst $(BLD)prog.hex
 $(BLD)prog.hex: $(BLD)prog.elf
@@ -34,7 +34,8 @@ $(BLD)prog.elf: $(BLD)main.o
 	@$(SIZE) $(BLD)prog.elf
 	@echo "******************************************************"	
 $(BLD)main.o: $(SRC)main.S
-	$(AS) -c $(SRC)main.S -o $(BLD)main.o $(ASFLAGS)
+	#$(AS) -c $(SRC)main.S -o $(BLD)main.o $(ASFLAGS) -I$(INC)
+	$(AS) $(SRC)main.S -o $(BLD)main.o $(ASFLAGS) -I$(INC)
 	#$(CC) -c $(SRC)main.S -o $(BLD)main.o $(CFLAGS) $(INC)
 	$(OBJDUMP) -dr -S $(BLD)main.o > $(BLD)main.lst
 
