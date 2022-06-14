@@ -13,39 +13,42 @@ module test_ram();
 initial begin
     $dumpvars;
     $display("start");
-    #20
+    #32
     $finish();
-end
-
-always begin
-    #1;
-    clk=~clk;
 end
 
 initial begin
     clk = 0;
     mem_ctrl = 0;
     we = 1;
-    address = 0;
+    address = 4;
     in = 32'h12345678;
-    #1
-    address = 1;
+    #2
+    address = 5;
     mem_ctrl = 0;
     #2
-    address = 2;
+    address = 6;
+    mem_ctrl = 0;
+    #2
+    address = 4;
     mem_ctrl = 1;
     #2
-    address = 8;
+    address = 5;
+    mem_ctrl = 1;
+    
+    #2
+    address = 12;
     mem_ctrl = 2;
-    
-    #2
-    address = 9;
-    mem_ctrl = 0;
-    
-    #2
-    address = 14;
-    mem_ctrl = 1;
+    #2 we = 0;
+    address = 0;
+    #2 address = 4;
+    #2 address = 8;
+    #2 address = 12;
+end
 
+always begin
+    #1;
+    clk=~clk;
 end
 
 endmodule
