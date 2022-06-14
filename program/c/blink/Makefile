@@ -6,16 +6,17 @@ LIB = lib/
 BLD = build/
 
 
-#CC = riscv64-linux-gnu-gcc
-CC = /opt/riscv32/bin/riscv32-unknown-elf-gcc
-#AS = riscv64-linux-gnu-as
-AS = /opt/riscv32/bin/riscv32-unknown-elf-as
-#OBJCOPY = riscv64-linux-gnu-objcopy  
-OBJCOPY = /opt/riscv32/bin/riscv32-unknown-elf-objcopy  
-#OBJDUMP = riscv64-linux-gnu-objdump
-OBJDUMP = /opt/riscv32/bin/riscv32-unknown-elf-objdump
-SIZE = /opt/riscv32/bin/riscv32-unknown-elf-size
-CFLAGS = -O1 -march=rv32i -mabi=ilp32 -mcmodel=medany -nostartfiles
+CC = riscv64-unknown-elf-gcc
+#CC = /opt/riscv32/bin/riscv32-unknown-elf-gcc
+AS = riscv64-unknown-elf-as
+#AS = /opt/riscv32/bin/riscv32-unknown-elf-as
+OBJCOPY = riscv64-unknown-elf-objcopy  
+#OBJCOPY = /opt/riscv32/bin/riscv32-unknown-elf-objcopy  
+OBJDUMP = riscv64-unknown-elf-objdump
+#OBJDUMP = /opt/riscv32/bin/riscv32-unknown-elf-objdump
+SIZE = riscv64-unknown-elf-size
+#SIZE = /opt/riscv32/bin/riscv32-unknown-elf-size
+CFLAGS = -O1 -specs=picolibc.specs -march=rv32i -mabi=ilp32 -mcmodel=medany -nostartfiles
 #-mcmodel=medany
 LFLAGS = -T$(LIB)rv.ld -Xlinker -Map=$(BLD)prog.map -nostartfiles
 #ASFLAGS = -g -march=rv32ima -mabi=ilp32 
