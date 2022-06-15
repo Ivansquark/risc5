@@ -1,7 +1,8 @@
 `include "../io_ram_decoder/io_ram_decoder.v"
 `include "../led/led.v"
 `include "../uart/uart.v"
-`include "../ram/ram.v"
+//`include "../ram/ram.v"
+`include "../ram/ram.sv"
 `include "../load_mux/load_mux.v"
 
 module io_ram_datapath(
@@ -20,6 +21,7 @@ wire we_ram;
 wire we_uart;
 wire we_led;
 wire [31:0] address_to_ram;
+wire [31:0] address_aligned;
 wire [2:0]uart_reg_mux_out;
 wire load_mux;
 wire [31:0]rd_uart;
@@ -27,6 +29,8 @@ wire [31:0]rd_ram;
 
 reg [3:0]mem_wmask;
 reg [31:0]wd_out;
+
+assign address_aligned = {address_to_ram[31:2], {2{1'b0}}};
 
 always @* begin
     if(we) begin
@@ -102,10 +106,16 @@ uart uart0(
     rd_uart, tx                             //outputs
 );
 
-ram ram0(
-    clk, mem_wmask, address_to_ram, wd_out, 
+ram ram0( //SystemVerilog
+    clk, we, mem_wmask, address_aligned, address_aligned, wd_out,
     rd_ram
 );
+//ram ram0(
+//    clk, mem_wmask, address_to_ram, wd_out, 
+//    rd_ram
+//);
+
+
 
 load_mux load_mux0(
     load_mux, rd_ram, rd_uart,
