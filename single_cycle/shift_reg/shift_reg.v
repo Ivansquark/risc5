@@ -8,7 +8,7 @@ module shift_reg #(parameter N = 9) (
 );
 
 initial begin
-    par_out = 1;
+    par_out = {{N{1'b1}}};
 end
 
 always @(posedge clk) begin

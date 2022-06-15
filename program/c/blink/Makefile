@@ -30,8 +30,6 @@ $(BLD)prog.bin: $(BLD)prog.elf
 $(BLD)prog.lst: $(BLD)prog.elf
 	$(OBJDUMP) -Dr -S $(BLD)prog.elf > $(BLD)prog.lst -M no-aliases
 
-#$(BLD)main.elf: $(SRC)start.s
-#	$(CC) $(SRC)start.s -o $(BLD)main.elf $(CFLAGS) $(LFLAGS)
 $(BLD)prog.elf: $(BLD)startup.o $(BLD)main.o 
 	$(CC)	$(BLD)startup.o $(BLD)main.o \
 		$(LFLAGS) -o $(BLD)prog.elf $(CFLAGS) -I$(INC)

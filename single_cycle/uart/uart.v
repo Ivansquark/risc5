@@ -147,10 +147,9 @@ end
 reg [3:0]tx_counter; // count till 8
 reg [31:0]baud_counter_tx;
 reg [7:0]shift_transmit = 0;
-reg [8:0]tx_data = 0;
+reg [8:0]tx_data = 9'b111111111;
 reg load = 0;
 reg is_need_start_tx = 0;
-reg is_tx_started = 0;
 integer i;
 // shift register with new clk
 shift_reg shift_reg_tx(.clk(brr_clk), 
@@ -161,7 +160,6 @@ shift_reg shift_reg_tx(.clk(brr_clk),
 
 initial begin
     tx_counter = 0;
-    is_tx_started = 0;
     is_need_start_tx = 0;
 end
 
@@ -184,7 +182,6 @@ always @(posedge brr_clk) begin
         end
         else if(tx_counter == 9) begin
                     tx_counter <= 0;
-                    is_tx_started <= 0;
                     stat_reg_tx_is_started <= 0;//stop sending   is_tx_started = 0;
 
         end

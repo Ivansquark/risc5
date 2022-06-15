@@ -4,8 +4,8 @@ void delay(uint8_t clocks);
 
 void main(void) {
     volatile uint8_t received_byte = 5;
-    //set UART prscaler
-    *(uint32_t *)UART_BAUD_REG = 0x00000002;
+    // set UART prescaler
+    *(uint32_t *)UART_BAUD_REG = 0x00000001;
     while(1) {
         if((*(uint32_t *)UART_STAT_REG & UART_RX_READY) == 1) {
             received_byte = *(uint32_t *)UART_RDR_REG;
@@ -14,10 +14,13 @@ void main(void) {
         *(uint32_t *)LEDS_ODR |= 0x000000FF;
         delay(received_byte);
         *(uint32_t *)LEDS_ODR &= ~0x000000FF;
-        //send uart
+        // send uart
         *(uint32_t *)UART_TDR_REG = received_byte;
         *(uint32_t *)UART_CTRL_REG = 0x00000001;
-        while((*(uint32_t*)UART_STAT_REG) & (0x00000001)) {}
+        volatile uint32_t temp = (*(uint32_t *)UART_STAT_REG);
+        while(temp & (0x00000001)) {
+            temp = (*(uint32_t *)UART_STAT_REG);
+        }
     }
     return;
 }

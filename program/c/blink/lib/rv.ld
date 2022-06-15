@@ -1,8 +1,8 @@
 OUTPUT_ARCH( "riscv" )
 
 ENTRY( _start )
-/*_StackTop = 0x00000200 */
-_Min_Stack_Size = 0x0100;  /*256K*/
+/*_StackTop = 0x0000080 */
+_Min_Stack_Size = 0x080;  /*128*/
 
 MEMORY
 { 
@@ -13,7 +13,7 @@ MEMORY
 
 SECTIONS
 {  
-    __stack_size = DEFINED(_Min_Stack_Size) ? _Min_Stack_Size : 256;
+    __stack_size = DEFINED(_Min_Stack_Size) ? _Min_Stack_Size : 128;
     . = ALIGN(4);
 /*  .vectors :
     {

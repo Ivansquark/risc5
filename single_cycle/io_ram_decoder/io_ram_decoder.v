@@ -16,63 +16,63 @@ wire isRam = !isIO;
 always @* begin
     address_to_ram = address;
     if(isRam) begin
-        if(we)  we_ram = 1;
-        else    we_ram = 0;
-        we_uart = 0;
-        we_led = 0;
-        load_mux = 0;
+        if(we)  begin 
+            we_ram = 1; we_uart = 0; we_led = 0;
+        end
+        else begin 
+            we_ram = 0; we_uart = 0; we_led = 0;
+        end
         load_mux = `LOAD_MUX_RAM;
+        uart_reg_mux_out = `UART_MUX_CTRL;
     end
     else begin
-        if(address == `LED_REG_ADDR) we_led = 1;
+        load_mux = `LOAD_MUX_UART;
+        if(address == `LED_REG_ADDR) begin 
+            we_led = 1; we_uart = 0; we_ram = 0;
+        end
         else if(address == `UART_CTRL_REG) begin
+            uart_reg_mux_out = `UART_MUX_CTRL;
             if(we) begin 
                 we_uart = 1; we_ram = 0; we_led = 0;
-                uart_reg_mux_out = `UART_MUX_CTRL;
             end
             else begin
                 we_uart = 0; we_ram = 0; we_led = 0;
-                load_mux = `LOAD_MUX_UART;
             end
         end
         else if(address == `UART_STAT_REG) begin
+            uart_reg_mux_out = `UART_MUX_STAT;
             if(we) begin 
                 we_uart = 1; we_ram = 0; we_led = 0;
-                uart_reg_mux_out = `UART_MUX_STAT;
             end
             else begin
                 we_uart = 0; we_ram = 0; we_led = 0;
-                load_mux = `LOAD_MUX_UART;
             end
         end
         else if(address == `UART_BAUD_REG) begin
+            uart_reg_mux_out = `UART_MUX_BAUD;
             if(we) begin 
                 we_uart = 1; we_ram = 0; we_led = 0;
-                uart_reg_mux_out = `UART_MUX_BAUD;
             end
             else begin
                 we_uart = 0; we_ram = 0; we_led = 0;
-                load_mux = `LOAD_MUX_UART;
             end
         end
         else if(address == `UART_TDR_REG) begin
+            uart_reg_mux_out = `UART_MUX_TDR;
             if(we) begin 
                 we_uart = 1; we_ram = 0; we_led = 0;
-                uart_reg_mux_out = `UART_MUX_TDR;
             end
             else begin
                 we_uart = 0; we_ram = 0; we_led = 0;
-                load_mux = `LOAD_MUX_UART;
             end
         end
         else if(address == `UART_RDR_REG) begin
+            uart_reg_mux_out = `UART_MUX_RDR;
             if(we) begin 
                 we_uart = 1; we_ram = 0; we_led = 0;
-                uart_reg_mux_out = `UART_MUX_RDR;
             end
             else begin
                 we_uart = 0; we_ram = 0; we_led = 0;
-                load_mux = `LOAD_MUX_UART;
             end
         end
     end

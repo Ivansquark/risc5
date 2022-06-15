@@ -20,7 +20,7 @@ initial begin
     we = 1;
     clk = 0;
     reg_num = 3;
-    wd = 32'h0000007F;
+    wd = 32'h0000005F;
     rx = 1;
     #2;
     reg_num = 0;
