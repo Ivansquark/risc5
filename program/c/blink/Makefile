@@ -16,9 +16,9 @@ OBJDUMP = riscv64-unknown-elf-objdump
 #OBJDUMP = /opt/riscv32/bin/riscv32-unknown-elf-objdump
 SIZE = riscv64-unknown-elf-size
 #SIZE = /opt/riscv32/bin/riscv32-unknown-elf-size
-CFLAGS = -O1 -specs=picolibc.specs -march=rv32i -mabi=ilp32 -mcmodel=medany -nostartfiles
+CFLAGS = -O0 -specs=picolibc.specs -march=rv32i -mabi=ilp32 -mcmodel=medany
 #-mcmodel=medany
-LFLAGS = -T$(LIB)rv.ld -Xlinker -Map=$(BLD)prog.map -nostartfiles
+LFLAGS = -T$(LIB)rv.ld -Xlinker -Map=$(BLD)prog.map -nostartfiles -nostdlib
 #ASFLAGS = -g -march=rv32ima -mabi=ilp32 
 
 all: $(BLD)prog.elf $(BLD)prog.bin $(BLD)prog.lst $(BLD)prog.hex
