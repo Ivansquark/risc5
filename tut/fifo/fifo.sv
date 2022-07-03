@@ -42,11 +42,11 @@ always_ff @(posedge clk) begin
     end
 end
 
-always_ff @(negedge clk) begin
+always_comb begin
     if(push) begin
         if(!is_empty) begin
-            if (write_ptr == read_ptr) is_full <= 1;
-            else is_full <= 0;
+            if (write_ptr == read_ptr) is_full = 1;
+            else is_full = 0;
         end
     end
 end
@@ -62,11 +62,11 @@ always_ff @(posedge clk) begin
     end    
 end
 
-always_ff @(negedge clk) begin
+always_comb begin
     if(pop) begin
         if(!is_full) begin
-            if (read_ptr == write_ptr) is_empty <= 1;
-            else is_empty <= 0;
+            if (read_ptr == write_ptr) is_empty = 1;
+            else is_empty = 0;
         end
     end
 end
